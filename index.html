@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Ainy Contreras M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/337be747ec.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v9/font/simple-icons.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+        
+        :root {
+            /* fondos oscuros */
+            --negro-profundo: #0a0a0a;
+            --gris-carbon: #1a1a1a;
+            --gris-oscuro: #2d2d2d;
+            
+            /* dorados/metálicos */
+            --dorado-claro: #d4af37;
+            --dorado-brillante: #f4d03f;
+            --bronce: #b8860b;
+            
+            /* rojos */
+            --rojo-profundo: #8b0000;
+            --rojo-carmesi: #dc143c;
+            --rojo-rosa: #ff6b6b;
+            
+            /* blancos/grises claros */
+            --blanco-hueso: #e8e8e8;
+            --gris-claro: #c0c0c0;
+            --blanco-perla: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
+            color: var(--blanco-hueso);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Navbar */
+        .nav-glass {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.27);*/
+        }
+
+        .nav-link {
+            color: var(--dorado-claro);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--bronce);
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.3);
+        }
+
+        .nav-glass.scrolled {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(212,175,55,0.05);
+        }
+
+        .logo-container {
+            transition: all 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-container img {
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover img {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* animación de pétalos de rosa cayendo */
+        @keyframes petal-fall {
+            0% {   /* arriba de la pantalla, invisible */
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            10% {  /* se vuelve visible rápidamente */
+                opacity: 1;
+            }
+            50% {  /* en el centro de la pantalla */
+                transform: translateY(50vh) translateX(30px) rotate(180deg) scale(0.8);
+            }
+            90% {  /* casi al final, empieza a desvanecerse */
+                opacity: 0.7;
+            }
+            100% { /* abajo de la pantalla, invisible */
+                transform: translateY(110vh) translateX(60px) rotate(360deg) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes petal-fall-left {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            30% {  /* a los 30% ya se desvió 40px a la izquierda */
+                transform: translateY(30vh) translateX(-40px) rotate(120deg) scale(0.9);
+            }
+            60% {  /* a los 60% ya se desvió 80px a la izquierda */
+                transform: translateY(60vh) translateX(-80px) rotate(240deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(110vh) translateX(-100px) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* animación de pétalo cayendo hacia la derecha con rotación antihoraria */
+        @keyframes petal-fall-right {
+            0% { /* arriba de la pantalla, invisible */
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 0; /* completamente invisible */
+            }
+            
+            10% { /* aparición rápida (fade-in) */
+                opacity: 1; /* se vuelve completamente visible */
+                /* las propiedades de transform se interpolan automáticamente desde el 0% */
+            }
+            
+            30% { /* primera desviación: ya cayó 30% de la pantalla */
+                transform: translateY(30vh) translateX(50px) rotate(-120deg) scale(0.9);
+            }
+            
+            60% { /* segunda desviación: ya pasó más de la mitad de la pantalla */
+                transform: translateY(60vh) translateX(90px) rotate(-240deg) scale(0.7);
+            }
+            
+            90% { /* empieza a desvanecerse antes de salir de pantalla */
+                opacity: 0.6; 
+                /* el transform sigue interpolándose hacia el 100% */
+            }
+            
+            100% { /* abajo de la pantalla, invisible */
+                transform: translateY(110vh) translateX(110px) rotate(-360deg) scale(0.3);
+                opacity: 0; /* completamente invisible otra vez */
+            }
+        }
+
+        @keyframes petal-spiral {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            25% {  /* primer zigzag: 30px a la izquierda */
+                transform: translateY(25vh) translateX(-30px) rotate(90deg) scale(1.1);
+            }
+            50% {  /* segundo zigzag: 40px a la derecha (cruza el centro) */
+                transform: translateY(50vh) translateX(40px) rotate(180deg) scale(0.8);
+            }
+            75% {  /* tercer zigzag: 20px a la izquierda otra vez */
+                transform: translateY(75vh) translateX(-20px) rotate(270deg) scale(0.6);
+            }
+            100% {
+                transform: translateY(110vh) translateX(10px) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* pétalo de rosa */
+        .rose-petal {
+            position: fixed;
+            width: 20px;
+            height: 30px;
+            pointer-events: none;
+            opacity: 0;
+            filter: blur(0.5px);
+            z-index: 1; /* encima del fondo y debajo del content */
+        }
+
+        /* forma de pétalo usando pseudo-elementos */
+        .rose-petal::before {
+            content: ''; /* importante */
+            position: absolute; /* dentro del rose */
+            width: 100%; 
+            height: 100%;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(220, 20, 60, 0.9) 0%,
+                rgba(139, 0, 0, 0.8) 50%,
+                rgba(100, 0, 0, 0.6) 100%
+            );
+            /* punto clave - forma del pétalo */
+            border-radius: 80% 0 80% 0; /* lt lb rt rb */
+            transform: rotate(45deg); /* toque final */
+            box-shadow: 
+                inset -2px -2px 4px rgba(0, 0, 0, 0.3), /* interna para el volumen */
+                0 2px 6px rgba(220, 20, 60, 0.4); /* externa para el resplandor */
+        }
+
+        /* vena del pétalo */
+        .rose-petal::after {
+            content: ''; /* psuedo */
+            position: absolute; 
+            width: 2px;
+            height: 70%;
+            background: linear-gradient(
+                to bottom,
+                rgba(139, 0, 0, 0.6),
+                transparent
+            );
+            left: 50%;
+            top: 10%;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        /* animación de niebla */
+        @keyframes fog-drift {
+            0%, 100% { 
+                transform: translateX(-10%) translateY(0);
+                opacity: 0.15;
+            }
+            50% { 
+                transform: translateX(10%) translateY(-20px);
+                opacity: 0.4;
+            }
+        }
+
+        .fog {
+            position: fixed;
+            width: 200%;
+            height: 400px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(139, 0, 0, 0.25) 25%,
+                rgba(212, 175, 55, 0.3) 50%,
+                rgba(139, 0, 0, 0.25) 75%,
+                transparent 100%
+            );
+            filter: blur(90px);
+            animation: fog-drift 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* animación de brillo para el título */
+        @keyframes shimmer {
+            0%, 100% { 
+                background-position: 0% 50%;
+            }
+            50% { 
+                background-position: 100% 50%;
+            }
+        }
+
+        .animate-shimmer {
+            background: linear-gradient(
+                90deg,
+                var(--blanco-hueso) 0%,
+                var(--dorado-brillante) 30%,
+                var(--dorado-claro) 50%,
+                var(--bronce) 70%,
+                var(--blanco-hueso) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        .shimmer-stroke {
+            -webkit-text-stroke: 0.5px rgba(212, 175, 55, 0.6);
+        }
+
+        /* botón místico */
+        .btn-mystic {
+            position: relative;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.15), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--dorado-brillante);
+            font-size: 16px;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-mystic::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.4), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            border-radius: 50%;
+        }
+
+        .btn-mystic:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-mystic:hover {
+            border-color: var(--rojo-carmesi);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        .btn-mystic span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* iconos sociales */
+        .social-sigil {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(212, 175, 55, 0.6);
+            background: radial-gradient(
+                circle at top,
+                rgba(139, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.6)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dorado-claro);
+            font-size: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .social-sigil::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(220, 20, 60, 0.3),
+                transparent 50%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .social-sigil:hover {
+            transform: scale(1.15) rotate(3deg);
+            color: var(--blanco-perla);
+            border-color: var(--rojo-carmesi);
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.9);
+        }
+
+        .social-sigil:hover::before {
+            opacity: 1;
+        }
+
+        /* marco decorativo */
+        .decorative-frame {
+            border: 3px solid var(--dorado-claro);
+            padding: 60px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(10, 10, 10, 0.85));
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 0 60px rgba(212, 175, 55, 0.3),
+                inset 0 0 40px rgba(139, 0, 0, 0.2);
+        }
+
+        /* esquinas ornamentales del marco */
+        .decorative-frame::before,
+        .decorative-frame::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--rojo-carmesi);
+        }
+
+        .decorative-frame::before {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .decorative-frame::after {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* línea decorativa */
+        .divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                var(--rojo-carmesi) 20%,
+                var(--dorado-claro) 50%,
+                var(--rojo-carmesi) 80%,
+                transparent 100%
+            );
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--dorado-brillante);
+            font-size: 20px;
+            background: var(--negro-profundo);
+            padding: 0 15px;
+        }
+
+        /* tarjetas de proyecto */
+        .project-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.4), rgba(26, 26, 26, 0.6));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 40px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        /* efecto de barrido de luz al hover */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            border-color: var(--rojo-carmesi);
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.6);
+            transform: translateY(-10px);
+        }
+
+        .project-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 80px;
+            font-family: 'Cinzel', serif;
+            color: rgba(212, 175, 55, 0.15);
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .project-number {
+            color: rgba(220, 20, 60, 0.3);
+            transform: scale(1.1);
+        }
+
+        .tech-tag {
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 6px 14px;
+            font-size: 12px;
+            color: var(--dorado-claro);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+        }
+
+        .tech-tag:hover {
+            background: rgba(220, 20, 60, 0.3);
+            border-color: var(--rojo-carmesi);
+            color: var(--blanco-perla);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.5);
+        }
+
+        /* orbes de habilidades */
+        .skill-orb {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.3), rgba(139, 0, 0, 0.2));
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--dorado-claro);
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* aura del orbe */
+        .skill-orb::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.3), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .skill-orb:hover {
+            transform: translateY(-10px) scale(1.1);
+            border-color: var(--rojo-carmesi);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.5);
+        }
+
+        .skill-orb:hover::before {
+            opacity: 1;
+        }
+
+        .skill-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-name {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.05em;
+        }
+
+        /* partículas flotantes */
+        @keyframes float-particle {
+            0%, 100% { 
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-30px) translateX(20px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--dorado-claro);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-particle 8s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--dorado-claro);
+        }
+
+        /* texto de about me */
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--gris-claro);
+            text-align: justify;
+        }
+
+        /* letra capital ornamental 
+        .about-text::first-letter {
+            font-size: 72px;
+            float: left;
+            line-height: 60px;
+            padding-right: 12px;
+            color: var(--rojo-carmesi);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+        }*/
+
+        /* inputs del formulario de contacto */
+        .contact-input {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--blanco-hueso);
+            padding: 14px 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+        }
+
+        .contact-input:focus {
+            outline: none;
+            border-color: var(--rojo-carmesi);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .contact-input::placeholder {
+            color: rgba(192, 192, 192, 0.5);
+        }
+
+        .contact-section {
+            height: calc(100vh - 90px); /* navbar */
+            padding-top: 80px;
+            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <!-- pétalos de rosa cayendo -->
+    <div class="rose-petal" style="left: 5%; animation: petal-fall-left 12s infinite; animation-delay: 0s;"></div>
+    <div class="rose-petal" style="left: 12%; animation: petal-spiral 14s infinite; animation-delay: 1.5s;"></div>
+    <div class="rose-petal" style="left: 20%; animation: petal-fall 11s infinite; animation-delay: 3s;"></div>
+    <div class="rose-petal" style="left: 28%; animation: petal-fall-right 13s infinite; animation-delay: 0.8s;"></div>
+    <div class="rose-petal" style="left: 35%; animation: petal-fall-left 15s infinite; animation-delay: 4.2s;"></div>
+    <div class="rose-petal" style="left: 42%; animation: petal-spiral 12s infinite; animation-delay: 2.1s;"></div>
+    <div class="rose-petal" style="left: 50%; animation: petal-fall 13s infinite; animation-delay: 5.5s;"></div>
+    <div class="rose-petal" style="left: 58%; animation: petal-fall-right 14s infinite; animation-delay: 1.2s;"></div>
+    <div class="rose-petal" style="left: 65%; animation: petal-fall-left 11s infinite; animation-delay: 3.8s;"></div>
+    <div class="rose-petal" style="left: 72%; animation: petal-spiral 15s infinite; animation-delay: 0.5s;"></div>
+    <div class="rose-petal" style="left: 80%; animation: petal-fall 12s infinite; animation-delay: 4.7s;"></div>
+    <div class="rose-petal" style="left: 88%; animation: petal-fall-right 13s infinite; animation-delay: 2.3s;"></div>
+    <div class="rose-petal" style="left: 95%; animation: petal-fall-left 14s infinite; animation-delay: 6s;"></div>
+    <div class="rose-petal" style="left: 8%; animation: petal-fall 16s infinite; animation-delay: 7s;"></div>
+    <div class="rose-petal" style="left: 18%; animation: petal-fall-right 11s infinite; animation-delay: 8.5s;"></div>
+    <div class="rose-petal" style="left: 25%; animation: petal-spiral 13s infinite; animation-delay: 5.2s;"></div>
+    <div class="rose-petal" style="left: 38%; animation: petal-fall-left 12s infinite; animation-delay: 9s;"></div>
+    <div class="rose-petal" style="left: 48%; animation: petal-fall 14s infinite; animation-delay: 3.5s;"></div>
+    <div class="rose-petal" style="left: 55%; animation: petal-spiral 15s infinite; animation-delay: 7.8s;"></div>
+    <div class="rose-petal" style="left: 68%; animation: petal-fall-right 13s infinite; animation-delay: 4.5s;"></div>
+    <div class="rose-petal" style="left: 75%; animation: petal-fall-left 11s infinite; animation-delay: 6.7s;"></div>
+    <div class="rose-petal" style="left: 85%; animation: petal-fall 12s infinite; animation-delay: 8.2s;"></div>
+    <div class="rose-petal" style="left: 92%; animation: petal-spiral 14s infinite; animation-delay: 2.8s;"></div>
+
+    <!-- capas de niebla -->
+    <div class="fog" style="top: 15%; animation-delay: 0s;"></div>
+    <div class="fog" style="bottom: 20%; animation-delay: -10s;"></div>
+    <div class="fog" style="top: 60%; animation-delay: -5s;"></div>
+
+    <!-- partículas flotantes doradas -->
+    <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 30%; top: 40%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 70%; top: 30%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 90%; top: 50%; animation-delay: 3s;"></div>
+
+    <!-- navegación -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center px-8 " id="navbar">
+        <div class="nav-glass flex justify-between items-center w-full max-w-7xl py-3 rounded-full">
+            <!-- logo -->
+            <a href="#home" class="logo-container p-2 rounded-lg">
+                <img src="img/Monograma_Bronce.png" alt="Logo" class="w-12 h-12 logo-hover">
+            </a>
+            
+            <!-- links -->
+            <div class="flex gap-2">
+                <a href="#aboutme" class="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full hover:text-[#FFD700] ">Acerca de mí</a>
+                <a href="#projects" class="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full hover:text-[#FFD700]">Proyectos</a>
+                <a href="#techstack" class="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full hover:text-[#FFD700] ">Tech Stack</a>
+                <a href="#contact" class="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full hover:text-[#FFD700] ">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- hero section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center relative mt-5 px-8 z-10">
+        <!-- marco -->
+        <div class="decorative-frame">
+            
+            <h1 class="text-4xl font-semibold text-center tracking-[0.2em] mb-4 animate-shimmer shimmer-stroke">Ainy Contreras M.</h1>
+            
+            <div class="flex gap-10 justify-center mt-6">
+                <a href="https://github.com/tuusuario"
+                target="_blank"
+                aria-label="GitHub"
+                class="social-sigil">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+
+                <a href="https://www.linkedin.com/in/tuusuario"
+                target="_blank"
+                aria-label="LinkedIn"
+                class="social-sigil">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+            </div>
+
+            <!-- línea de decoración -->
+            <div class="divider"></div>
+        
+            <div class="text-2xl text-[#f4d03f] tracking-[0.3em] lowercase italic text-center">Frontend Web Developer</div>
+            
+            <div class="flex gap-6 justify-center flex-wrap">
+                <a href="#projects" class="btn-mystic mt-8"><span>Proyectos</span></a>
+                <a href="#aboutme" class="btn-mystic mt-8"><span>Sobre mí</span></a>
+                <a href="#contact" class="btn-mystic mt-8"><span>Contactar</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- about me section -->
+    <section id="aboutme" class="min-h-screen py-32 px-8 relative z-10 bg-gradient-to-b from-black/35 to-[#1a1a1a]/35">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-6xl text-center mb-16 animate-shimmer shimmer-stroke" style="font-weight: 700;">Acerca de Mí</h2>
+            
+            <div class="decorative-frame">
+                <p class="about-text mb-6">
+                Desarrolladora Frontend enfocada en crear interfaces funcionales y atractivas. 
+                Me gusta cuidar tanto el diseño como la experiencia del usuario, buscando siempre soluciones claras y eficaz.
+                Trabajo principalmente con HTML, CSS, JS, Flask Tailwind y continúo aprendiendo frameworks modernos.
+                </p>
+                <!-- 
+                <p class="about-text">
+                    cada proyecto es una oportunidad para explorar nuevas técnicas, aprender 
+                    y perfeccionar mi arte. me inspiro en la intersección entre el diseño gótico 
+                    y la tecnología moderna para crear algo verdaderamente único.
+                </p>-->
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="min-h-screen py-24 px-8 bg-gradient-to-b from-black/65 to-[#1a1a1a]/95">
+        <h2 class="text-5xl text-center mt-14 mb-16 text-[#d4af37] tracking-[0.3em] uppercase">Proyectos</h2>
+        
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-12">
+            <!-- Proyecto 1 -->
+            <div class="relative bg-gradient-to-br from-[#2d2d2d]/40 to-[#1a1a1a]/60 border border-[#d4af37]/30 p-8 cursor-pointer overflow-hidden hover:border-[#dc143c] hover:shadow-[0_0_40px_rgba(139,0,0,0.6)] hover:-translate-y-2 transition-all group">
+                <div class="absolute top-4 right-4 text-8xl text-[#d4af37]/20 font-light">01</div>
+                
+                <h3 class="text-3xl text-[#f4d03f] mb-4 relative z-10">Keyo CORP: Línea por Línea</h3>
+                <p class="text-[#c0c0c0] leading-relaxed mb-6 relative z-10">
+                    Este es un videojuego arcade pixel art sobre mecanografía tipo tetris. ¿Sobrevivirás a los bugs?
+                </p>
+                <div class="flex flex-wrap gap-2 relative z-10">
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Pygame</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Python</span>
+                </div>
+            </div>
+
+            <!-- Proyecto 2 -->
+            <div class="relative bg-gradient-to-br from-[#2d2d2d]/40 to-[#1a1a1a]/60 border border-[#d4af37]/30 p-8 cursor-pointer overflow-hidden hover:border-[#dc143c] hover:shadow-[0_0_40px_rgba(139,0,0,0.6)] hover:-translate-y-2 transition-all group">
+                <div class="absolute top-4 right-4 text-8xl text-[#d4af37]/20 font-light">02</div>
+                
+                <h3 class="text-3xl text-[#f4d03f] mb-4 relative z-10">Semantic Visualization</h3>
+                <p class="text-[#c0c0c0] leading-relaxed mb-6 relative z-10">
+                    Herramienta de visualización web que permite explorar algoritmos GSGP en un espacio semántico.
+                </p>
+                <div class="flex flex-wrap gap-2 relative z-10">
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Flask</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Python</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">HTML</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Tailwind</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">JavaScript</span>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 -->
+            <div class="relative bg-gradient-to-br from-[#2d2d2d]/40 to-[#1a1a1a]/60 border border-[#d4af37]/30 p-8 cursor-pointer overflow-hidden hover:border-[#dc143c] hover:shadow-[0_0_40px_rgba(139,0,0,0.6)] hover:-translate-y-2 transition-all group">
+                <div class="absolute top-4 right-4 text-8xl text-[#d4af37]/20 font-light">03</div>
+                
+                <h3 class="text-3xl text-[#f4d03f] mb-4 relative z-10">SDGKU Academic System</h3>
+                <p class="text-[#c0c0c0] leading-relaxed mb-6 relative z-10">
+                    Dashboard analítico con visualizaciones interactivas y recomendaciones sobre cursos, sesiones, etc.
+                </p>
+                <div class="flex flex-wrap gap-2 relative z-10">
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Node.js</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">TypeScript</span>                    
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">HTML</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Tailwind</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">JavaScript</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">Prisma</span>
+                    <span class="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">MySQL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="techstack" class="min-h-screen py-32 px-8 relative z-10 bg-gradient-to-b from-black/75 to-[#1a1a1a]/75">
+        <h2 class="text-6xl text-center mb-20 animate-shimmer shimmer-stroke" style="font-weight: 700;">Tech Stack</h2>
+        
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
+                <!-- orbe html -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="fa-brands fa-html5"></i></div>
+                    <div class="skill-name">html5</div>
+                </div>
+                
+                <!-- orbe css -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="fa-brands fa-css3-alt"></i></div>
+                    <div class="skill-name">css3</div>
+                </div>
+                
+                <!-- orbe javascript -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="fa-brands fa-js"></i></div>
+                    <div class="skill-name">javascript</div>
+                </div>
+
+                <!-- orbe python -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
+                    <div class="skill-name">python</div>
+                </div>
+                
+                <!-- orbe tailwind -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="si si-tailwindcss"></i></div>
+                <div class="skill-name">Tailwind</div>
+                </div>
+
+
+                <!-- orbe flask -->
+                <div class="skill-orb">
+                    <div class="skill-icon"><i class="si si-flask"></i></div>
+                <div class="skill-name">Flask</div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact" class="contact-section px-8 relative z-10">
+        <h2 class="text-6xl text-center mt-2 mb-20 animate-shimmer shimmer-stroke" style="font-weight: 700;">
+            Contacto
+        </h2>
+
+        <div class="max-w-5xl mx-auto">
+            <div class="decorative-frame">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+                    <!-- Redes-->
+                    <div>
+                        <p class="text-2xl mb-6" style="color: var(--dorado-claro); letter-spacing: 0.12em;">
+                            Contactame
+                        </p>
+
+                        <p class="text-base mb-8 leading-relaxed" style="color: var(--gris-claro);">
+                            Puedes contactarme directamente a través de mis redes
+                            o enviarme un correo. Siempre estoy abierta a nuevas ideas,
+                            proyectos o colaboraciones.
+                        </p>
+
+                        <div class="flex gap-6">
+                            <a href="https://github.com/tuusuario" target="_blank" class="social-sigil">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/tuusuario" target="_blank" class="social-sigil">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <form class="space-y-3 max-w-sm">
+                        <div>
+                            <label class="block text-sm"
+                                style="color: var(--dorado-claro); letter-spacing: 0.1em;">
+                                Asunto
+                            </label>
+                            <input type="text" placeholder="Asunto"
+                                class="contact-input text-sm py-2">
+                        </div>
+
+                        <div>
+                            <label class="block  text-sm"
+                                style="color: var(--dorado-claro); letter-spacing: 0.1em;">
+                                Email
+                            </label>
+                            <input type="email" placeholder="usuario@email.com"
+                                class="contact-input text-sm py-2">
+                        </div>
+
+                        <div>
+                            <label class="block  text-sm"
+                                style="color: var(--dorado-claro); letter-spacing: 0.1em;">
+                                Mensaje
+                            </label>
+                            <textarea rows="3" placeholder="Mensaje"
+                                class="contact-input text-sm py-2 resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-mystic px-8 text-sm">
+                            <span>Enviar</span>
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer -->
+    <footer class="py-8 text-center relative z-10 mt-48" style="background: rgba(10, 10, 10, 0.8); border-top: 1px solid rgba(212, 175, 55, 0.2);">
+        <p style="color: var(--gris-claro); letter-spacing: 0.15em;">
+            Por los que vendran después
+        </p>
+    </footer>
+
+    <script>
+        // efecto scroll en navbar
+        const nav = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 80) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+
+        // smooth scroll para los links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
