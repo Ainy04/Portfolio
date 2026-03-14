@@ -174,7 +174,7 @@ function Navbar({ scrolled, lang, setLang }: NavbarProps) {
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6">
       <div className={`nav-glass flex justify-between items-center w-full max-w-6xl py-3 px-6 rounded-full ${scrolled ? "scrolled" : ""}`}>
         <a href="#home" className="logo-container p-2 rounded-lg">
-          <img src="/Monograma_Bronce.png" alt="Logo" className="w-12 h-12" />
+          <img src="/Portfolio/Monograma_Bronce.png" alt="Logo" className="w-12 h-12" />
         </a>
         <div className="flex gap-2 items-center">
           {([
