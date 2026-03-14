@@ -31,17 +31,6 @@ Portfolio personal desarrollado con **React + TypeScript + Tailwind CSS**, con e
 
 ---
 
-## 📁 Estructura
-
-```
-src/
-├── App.tsx          # Componente principal + todos los componentes
-├── index.css        # Estilos globales (temática, animaciones, clases custom)
-└── main.tsx         # Entry point
-```
-
----
-
 ## 🚀 Instalación y uso
 
 ```bash
@@ -107,8 +96,6 @@ await window.emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", { ... });
 - **Semantic Visualization** — Visualización 3D/2D de algoritmos GSGP con t-SNE, UMAP y PaCMAP
 
 ---
-
-## 📄 Licencia
 
 Por los que vendrán después. 🌹
 
