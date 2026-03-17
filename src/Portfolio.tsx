@@ -13,6 +13,7 @@ interface Project {
   date:  string;
   desc:  { es: string; en: string };
   tags:  string[];
+  repo?: string;
 }
 
 interface Skill {
@@ -21,9 +22,11 @@ interface Skill {
 }
 
 interface NavbarProps {
-  scrolled: boolean;
-  lang: "es" | "en";
-  setLang: (l: "es" | "en") => void;
+  scrolled:    boolean;
+  lang:        "es" | "en";
+  setLang:     (l: "es" | "en") => void;
+  menuOpen:    boolean;
+  setMenuOpen: (v: boolean) => void;
 }
 
 interface FormFields {
@@ -37,7 +40,7 @@ const T = {
   es: {
     nav_about: "Acerca de mí", nav_projects: "Proyectos", nav_tech: "Tecnologías", nav_contact: "Contacto",
     hero_role: "Frontend  Developer", hero_sub: "UI/UX · Visualización de Datos",
-    btn_projects: "Proyectos", btn_about: "Sobre mí", btn_contact: "Contactar",
+    btn_projects: "Proyectos", btn_about: "Acerca de mí", btn_contact: "Contactar",
     about_title: "Acerca de Mí",
     about_text: "Soy desarrolladora Frontend con enfoque en crear interfaces  responsivas, interactivas y pensadas para el usuario. Me apasiona el espacio donde el diseño y la tecnología se encuentran — donde una buena arquitectura de información se traduce en una experiencia que se siente natural e intuitiva. Trabajo con JavaScript, TypeScript, Python y frameworks modernos como React Native y Tailwind CSS, con experiencia en visualización de datos científicos, sistemas académicos completos y apps móviles. Me gusta aprender rápido, trabajar en equipo y entregar algo que no solo funcione — sino que se vea y se sienta bien. Actualmente curso Ingeniería en Software y Tecnologías Emergentes en la UABC, Tecate, B.C.",
     hl1: "Proyectos", hl2: "Mejora rendimiento", hl3: "Registros visualizados", hl4: "Space Apps 2025",
@@ -105,6 +108,7 @@ const PROJECTS: Project[] = [
       en: "Mobile app that detects road irregularities using device sensors. Features i18n support, custom audio narration, and a global dynamic component system.",
     },
     tags: ["React Native", "PostgreSQL", "OpenStreetMap", "i18n"],
+    repo: "https://github.com/AssuredPigeon/ASPHALT",
   },
   {
     num: "02", title: "ExoLab", date: "Oct 2025",
@@ -113,22 +117,25 @@ const PROJECTS: Project[] = [
       en: "Interactive dashboard for exoplanet exploration and ML classification. Processes NASA KOI/TOI datasets with 3,000+ bodies. NASA Space Apps Challenge 2025 — Team Astro404.",
     },
     tags: ["Streamlit", "Pandas", "Python", "Numpy", "Scikit-learn", "XGBoost", "Plotly", "Matplotlib", "Seaborn"],
+    repo: "https://github.com/Ainy04/ExoLab-NasaSpacesApp2025",
   },
   {
     num: "03", title: "SDGKU Academic System", date: "Sep – Dic 2025",
     desc: {
-      es: "Plataforma  de administración educativa con dashboard de 12+ métricas en tiempo real y sistema de recomendación inteligente basado en historial académico.",
+      es: "Plataforma de administración educativa con dashboard de 12+ métricas en tiempo real y sistema de recomendación inteligente basado en historial académico.",
       en: "Full-stack educational management platform with a real-time dashboard of 12+ metrics and an intelligent recommendation system based on academic history.",
     },
     tags: ["Node.js", "TypeScript", "HTML", "Tailwind", "JavaScript", "Prisma", "MySQL"],
+    repo: "https://github.com/Garethsito/SDKGU-Subject-Sistem",
   },
   {
     num: "04", title: "Semantic Visualization", date: "Sep 2025 – Mar 2026",
     desc: {
-      es: "Herramienta de visualización  para explorar algoritmos GSGP en espacios semánticos. Visualización 3D/2D en tiempo real con t-SNE, UMAP y PaCMAP.",
-      en: " visualization tool to explore GSGP algorithms in semantic spaces. Real-time 3D/2D visualization using t-SNE, UMAP, and PaCMAP.",
+      es: "Herramienta de visualización para explorar algoritmos GSGP en espacios semánticos. Visualización 3D/2D en tiempo real con t-SNE, UMAP y PaCMAP.",
+      en: "Visualization tool to explore GSGP algorithms in semantic spaces. Real-time 3D/2D visualization using t-SNE, UMAP, and PaCMAP.",
     },
     tags: ["Flask", "Python", "HTML", "Tailwind", "JavaScript", "Plotly 3D"],
+    repo: "https://github.com/TreeLab-Projects/Visualizing-Semantic-Space-Exploration-in-GSGP",
   },
 ];
 
@@ -143,21 +150,21 @@ const SKILLS: Record<string, Skill[]> = {
     { icon: "fa-solid fa-database",  name: "SQL"        },
   ],
   "Frameworks y Librerías": [
-    { icon: "fa-brands fa-react",    name: "React Native" },
-    { icon: "fa-brands fa-node-js",  name: "Node.js"      },
-    { icon: "fa-solid fa-flask",     name: "Flask"        },
-    { icon: "fa-solid fa-wind",      name: "Tailwind CSS" },
-    { icon: "fa-solid fa-layer-group", name: "Prisma ORM" },
+    { icon: "fa-brands fa-react",      name: "React Native" },
+    { icon: "fa-brands fa-node-js",    name: "Node.js"      },
+    { icon: "fa-solid fa-flask",       name: "Flask"        },
+    { icon: "fa-solid fa-wind",        name: "Tailwind CSS" },
+    { icon: "fa-solid fa-layer-group", name: "Prisma ORM"   },
   ],
   "Bases de Datos": [
-    { icon: "fa-solid fa-database",  name: "MySQL"      },
-    { icon: "fa-solid fa-database",  name: "PostgreSQL" },
+    { icon: "fa-solid fa-database", name: "MySQL"      },
+    { icon: "fa-solid fa-database", name: "PostgreSQL" },
   ],
   "Visualización de Datos": [
-    { icon: "fa-solid fa-chart-line",      name: "Plotly"     },
-    { icon: "fa-solid fa-chart-bar",       name: "Seaborn"    },
-    { icon: "fa-solid fa-chart-area",      name: "Matplotlib" },
-    { icon: "fa-solid fa-chart-pie",       name: "Chart.js"   },
+    { icon: "fa-solid fa-chart-line", name: "Plotly"     },
+    { icon: "fa-solid fa-chart-bar",  name: "Seaborn"    },
+    { icon: "fa-solid fa-chart-area", name: "Matplotlib" },
+    { icon: "fa-solid fa-chart-pie",  name: "Chart.js"   },
   ],
   "Herramientas y Diseño": [
     { icon: "fa-brands fa-git-alt",  name: "Git"        },
@@ -168,26 +175,35 @@ const SKILLS: Record<string, Skill[]> = {
 };
 
 // Componentes
-function Navbar({ scrolled, lang, setLang }: NavbarProps) {
+
+// Navbar con menú hamburguesa para móvil
+function Navbar({ scrolled, lang, setLang, menuOpen, setMenuOpen }: NavbarProps) {
   const t = T[lang];
+  const navLinks: [string, string][] = [
+    ["#aboutme",   t.nav_about   ],
+    ["#projects",  t.nav_projects],
+    ["#techstack", t.nav_tech    ],
+    ["#contact",   t.nav_contact ],
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6">
       <div className={`nav-glass flex justify-between items-center w-full max-w-6xl py-3 px-6 rounded-full ${scrolled ? "scrolled" : ""}`}>
+
+        {/* Logo */}
         <a href="#home" className="logo-container p-2 rounded-lg">
           <img src="/Portfolio/Monograma_Bronce.png" alt="Logo" className="w-12 h-12" />
         </a>
-        <div className="flex gap-2 items-center">
-          {([
-            ["#aboutme",   t.nav_about   ],
-            ["#projects",  t.nav_projects],
-            ["#techstack", t.nav_tech    ],
-            ["#contact",   t.nav_contact ],
-          ] as [string, string][]).map(([href, label]) => (
+
+        {/* Links desktop — ocultos en móvil */}
+        <div className="hidden md:flex gap-2 items-center">
+          {navLinks.map(([href, label]) => (
             <a key={href} href={href} className="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full">
               {label}
             </a>
           ))}
-          {/* Language switcher — mismo estilo que nav-link */}
+
+          {/* Selector de idioma desktop */}
           <div className="flex gap-0 ml-2 border border-[rgba(212,175,55,0.3)] rounded-full overflow-hidden">
             {(["es", "en"] as Lang[]).map((l) => (
               <button
@@ -197,6 +213,52 @@ function Navbar({ scrolled, lang, setLang }: NavbarProps) {
                   ${lang === l
                     ? "bg-[rgba(212,175,55,0.15)] text-[#d4af37]"
                     : "bg-transparent text-[rgba(255,255,255,0.5)] hover:text-[#d4af37]"
+                  }`}
+                style={{ fontFamily: "inherit" }}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Visible para movil */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-9 h-9 cursor-pointer border-none bg-transparent"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menú"
+        >
+          <span className={`block w-6 h-[1.5px] bg-[#d4af37] transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
+          <span className={`block w-6 h-[1.5px] bg-[#d4af37] transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-6 h-[1.5px] bg-[#d4af37] transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[6.5px]" : ""}`} />
+        </button>
+      </div>
+
+      {/* Menú desplegable móvil con animación */}
+      <div className={`md:hidden absolute top-20 left-4 right-4 nav-glass rounded-2xl px-6 py-4 flex flex-col gap-3 transition-all duration-300
+        ${menuOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-3 pointer-events-none"}`}
+      >
+        {navLinks.map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            onClick={() => setMenuOpen(false)}
+            className="nav-link text-sm uppercase tracking-widest px-4 py-2 rounded-full text-center"
+          >
+            {label}
+          </a>
+        ))}
+        {/* Selector idioma móvil */}
+        <div className="flex justify-center mt-1">
+          <div className="flex gap-0 border border-[rgba(212,175,55,0.3)] rounded-full overflow-hidden">
+            {(["es", "en"] as Lang[]).map((l) => (
+              <button
+                key={l}
+                onClick={() => { setLang(l); setMenuOpen(false); }}
+                className={`text-xs uppercase tracking-widest px-4 py-2 transition-all cursor-pointer border-none
+                  ${lang === l
+                    ? "bg-[rgba(212,175,55,0.15)] text-[#d4af37]"
+                    : "bg-transparent text-[rgba(255,255,255,0.5)]"
                   }`}
                 style={{ fontFamily: "inherit" }}
               >
@@ -240,10 +302,10 @@ function RoseBackground() {
 function HeroSection({ lang }: { lang: Lang }) {
   const t = T[lang];
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center items-center relative mt-5 px-8 z-10">
-      <div className="decorative-frame">
-        <h1 className="text-4xl font-semibold text-center tracking-[0.2em] mb-4 animate-shimmer shimmer-stroke">
-          Ainy Contreras M.
+    <section id="home" className="min-h-screen flex flex-col justify-center items-center relative mt-5 px-4 sm:px-8 z-10">
+      <div className="decorative-frame w-full max-w-2xl mx-auto">
+        <h1 className="text-2xl sm:text-4xl font-semibold text-center tracking-[0.2em] mb-4 animate-shimmer shimmer-stroke">
+          Ainy Contreras Mendoza
         </h1>
         <div className="flex gap-10 justify-center mt-6">
           <a href="https://github.com/Ainy04" target="_blank" rel="noreferrer" aria-label="GitHub" className="social-sigil">
@@ -254,16 +316,16 @@ function HeroSection({ lang }: { lang: Lang }) {
           </a>
         </div>
         <div className="divider" />
-        <div className="text-2xl text-[#f4d03f] tracking-[0.3em] lowercase italic text-center">
+        <div className="text-lg sm:text-2xl text-[#f4d03f] tracking-[0.3em] lowercase italic text-center">
           {t.hero_role}
         </div>
-        <p className="text-center text-sm tracking-widest mt-2 text-[rgba(255,255,255,0.45)]">
+        <p className="text-center text-xs sm:text-sm tracking-widest mt-2 text-[rgba(255,255,255,0.45)]">
           {t.hero_sub}
         </p>
-        <div className="flex gap-6 justify-center flex-wrap">
-          <a href="#projects" className="btn-mystic mt-8"><span>{t.btn_projects}</span></a>
-          <a href="#aboutme"  className="btn-mystic mt-8"><span>{t.btn_about}</span></a>
-          <a href="#contact"  className="btn-mystic mt-8"><span>{t.btn_contact}</span></a>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap items-center">
+          <a href="#projects" className="btn-mystic mt-6 sm:mt-8 w-full sm:w-auto text-center"><span>{t.btn_projects}</span></a>
+          <a href="#aboutme"  className="btn-mystic sm:mt-8 w-full sm:w-auto text-center"><span>{t.btn_about}</span></a>
+          <a href="#contact"  className="btn-mystic sm:mt-8 w-full sm:w-auto text-center"><span>{t.btn_contact}</span></a>
         </div>
       </div>
     </section>
@@ -273,15 +335,14 @@ function HeroSection({ lang }: { lang: Lang }) {
 function AboutSection({ lang }: { lang: Lang }) {
   const t = T[lang];
   return (
-    <section id="aboutme" className="min-h-screen py-32 px-8 relative z-10 bg-gradient-to-b from-black/35 to-[#1a1a1a]/35">
+    <section id="aboutme" className="min-h-screen py-24 sm:py-32 px-4 sm:px-8 relative z-10 bg-gradient-to-b from-black/35 to-[#1a1a1a]/35">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-6xl text-center mb-16 animate-shimmer shimmer-stroke" style={{ fontWeight: 700 }}>
+        <h2 className="text-4xl sm:text-6xl text-center mb-10 sm:mb-16 animate-shimmer shimmer-stroke" style={{ fontWeight: 700 }}>
           {t.about_title}
         </h2>
         <div className="decorative-frame">
           <p className="about-text mb-8">{t.about_text}</p>
-          {/* Highlight cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-4">
             {([
               ["4+",   t.hl1],
               ["35%",  t.hl2],
@@ -290,14 +351,14 @@ function AboutSection({ lang }: { lang: Lang }) {
             ] as [string, string][]).map(([num, label]) => (
               <div
                 key={label}
-                className="border border-[rgba(212,175,55,0.3)] p-4 text-center
+                className="border border-[rgba(212,175,55,0.3)] p-3 sm:p-4 text-center
                            hover:border-[#dc143c] hover:shadow-[0_0_20px_rgba(139,0,0,0.4)]
                            transition-all duration-300"
               >
-                <span className="block text-3xl text-[#d4af37] font-light tracking-widest" style={{ fontFamily: "inherit" }}>
+                <span className="block text-2xl sm:text-3xl text-[#d4af37] font-light tracking-widest" style={{ fontFamily: "inherit" }}>
                   {num}
                 </span>
-                <span className="block text-xs mt-1 uppercase tracking-widest text-[rgba(255,255,255,0.5)]">
+                <span className="block text-[10px] sm:text-xs mt-1 uppercase tracking-widest text-[rgba(255,255,255,0.5)]">
                   {label}
                 </span>
               </div>
@@ -312,33 +373,45 @@ function AboutSection({ lang }: { lang: Lang }) {
 function ProjectsSection({ lang }: { lang: Lang }) {
   const t = T[lang];
   return (
-    <section id="projects" className="min-h-screen py-24 px-8 bg-gradient-to-b from-black/65 to-[#1a1a1a]/95">
-      <h2 className="text-5xl text-center mt-14 mb-16 text-[#d4af37] tracking-[0.3em] uppercase">
+    <section id="projects" className="min-h-screen py-20 sm:py-24 px-4 sm:px-8 bg-gradient-to-b from-black/65 to-[#1a1a1a]/95">
+      <h2 className="text-4xl sm:text-5xl text-center mt-10 sm:mt-14 mb-10 sm:mb-16 text-[#d4af37] tracking-[0.3em] uppercase">
         {t.proj_title}
       </h2>
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
         {PROJECTS.map((p) => (
           <div
             key={p.num}
-            className="relative bg-gradient-to-br from-[#2d2d2d]/40 to-[#1a1a1a]/60 border border-[#d4af37]/30 p-8
+            className="relative bg-gradient-to-br from-[#2d2d2d]/40 to-[#1a1a1a]/60 border border-[#d4af37]/30 p-6 sm:p-8
                        cursor-pointer overflow-hidden
                        hover:border-[#dc143c] hover:shadow-[0_0_40px_rgba(139,0,0,0.6)] hover:-translate-y-2
                        transition-all group"
           >
-            <div className="absolute top-4 right-4 text-8xl text-[#d4af37]/20 font-light">{p.num}</div>
-            {/* date badge */}
-            <p className="text-lg uppercase tracking-[0.2em] text-[#dc143c] mb-2" style={{ fontFamily: "inherit" }}>
+            <div className="absolute top-4 right-4 text-6xl sm:text-8xl text-[#d4af37]/20 font-light">{p.num}</div>
+            <p className="text-sm sm:text-lg uppercase tracking-[0.2em] text-[#dc143c] mb-2" style={{ fontFamily: "inherit" }}>
               {p.date}
             </p>
-            <h3 className="text-3xl text-[#f4d03f] mb-4 relative z-10">{p.title}</h3>
-            <p className="text-[#c0c0c0] leading-relaxed mb-6 relative z-10">{p.desc[lang]}</p>
+            <h3 className="text-2xl sm:text-3xl text-[#f4d03f] mb-3 sm:mb-4 relative z-10">{p.title}</h3>
+            <p className="text-[#c0c0c0] leading-relaxed mb-4 sm:mb-6 relative z-10 text-sm sm:text-base">{p.desc[lang]}</p>
             <div className="flex flex-wrap gap-2 relative z-10">
               {p.tags.map((tag) => (
-                <span key={tag} className="bg-[#8b0000]/20 border border-[#d4af37]/30 px-3 py-1 text-xs text-[#d4af37] tracking-wider">
+                <span key={tag} className="bg-[#8b0000]/20 border border-[#d4af37]/30 px-2 sm:px-3 py-1 text-xs text-[#d4af37] tracking-wider">
                   {tag}
                 </span>
               ))}
             </div>
+            {p.repo && (
+              <a
+                href={p.repo}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 mt-4 text-xs uppercase tracking-widest
+                           text-[rgba(255,255,255,0.45)] hover:text-[#d4af37] transition-colors duration-300"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <i className="fa-brands fa-github text-sm" />
+                ver repo
+              </a>
+            )}
           </div>
         ))}
       </div>
@@ -349,8 +422,8 @@ function ProjectsSection({ lang }: { lang: Lang }) {
 function TechStackSection({ lang }: { lang: Lang }) {
   const t = T[lang];
   const [activeCategory, setActiveCategory] = useState<string>(Object.keys(SKILLS)[0]);
-  const [animating, setAnimating] = useState(false);
-  const [visibleSkills, setVisibleSkills] = useState<Skill[]>(SKILLS[Object.keys(SKILLS)[0]]);
+  const [animating, setAnimating]           = useState(false);
+  const [visibleSkills, setVisibleSkills]   = useState<Skill[]>(SKILLS[Object.keys(SKILLS)[0]]);
 
   const switchCategory = (cat: string) => {
     if (cat === activeCategory) return;
@@ -365,43 +438,46 @@ function TechStackSection({ lang }: { lang: Lang }) {
   return (
     <section
       id="techstack"
-      className="min-h-screen py-32 px-8 relative z-10 bg-gradient-to-b from-black/75 to-[#1a1a1a]/75"
+      className="min-h-screen py-24 sm:py-32 px-4 sm:px-8 relative z-10 bg-gradient-to-b from-black/75 to-[#1a1a1a]/75"
     >
       <h2
-        className="text-6xl text-center mb-12 animate-shimmer shimmer-stroke"
+        className="text-4xl sm:text-6xl text-center mb-10 sm:mb-12 animate-shimmer shimmer-stroke"
         style={{ fontWeight: 700 }}
       >
         {t.tech_title}
       </h2>
 
-      {/* Categoria tabs */}
-      <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-2 mb-10">
-        {Object.keys(SKILLS).map((cat) => (
-          <button
-            key={cat}
-            onClick={() => switchCategory(cat)}
-            className="text-xs uppercase tracking-widest px-4 py-2 border transition-all duration-300 cursor-pointer"
-            style={{
-              fontFamily: "inherit",
-              background:   activeCategory === cat ? "rgba(212,175,55,0.12)" : "transparent",
-              borderColor:  activeCategory === cat ? "rgba(212,175,55,0.7)"  : "rgba(212,175,55,0.2)",
-              color:        activeCategory === cat ? "#f4d03f"                : "rgba(255,255,255,0.45)",
-              boxShadow:    activeCategory === cat ? "0 0 14px rgba(212,175,55,0.18)" : "none",
-              transform:    activeCategory === cat ? "translateY(-2px)" : "translateY(0)",
-            }}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className="max-w-4xl mx-auto mb-8 sm:mb-10">
+        <div
+          className="flex flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-2 overflow-x-auto pb-2 sm:pb-0 px-1"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {Object.keys(SKILLS).map((cat) => (
+            <button
+              key={cat}
+              onClick={() => switchCategory(cat)}
+              className="text-xs uppercase tracking-widest px-3 sm:px-4 py-2 border transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0"
+              style={{
+                fontFamily:  "inherit",
+                background:  activeCategory === cat ? "rgba(212,175,55,0.12)" : "transparent",
+                borderColor: activeCategory === cat ? "rgba(212,175,55,0.7)"  : "rgba(212,175,55,0.2)",
+                color:       activeCategory === cat ? "#f4d03f"               : "rgba(255,255,255,0.45)",
+                boxShadow:   activeCategory === cat ? "0 0 14px rgba(212,175,55,0.18)" : "none",
+                transform:   activeCategory === cat ? "translateY(-2px)"      : "translateY(0)",
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/*  Skills grid */}
       <div className="max-w-3xl mx-auto" style={{ height: "260px" }}>
         <div
-          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 content-start"
+          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4 content-start"
           style={{
-            opacity:   animating ? 0 : 1,
-            transform: animating ? "translateY(10px)" : "translateY(0)",
+            opacity:    animating ? 0 : 1,
+            transform:  animating ? "translateY(10px)" : "translateY(0)",
             transition: "opacity 0.22s ease, transform 0.22s ease",
           }}
         >
@@ -410,33 +486,27 @@ function TechStackSection({ lang }: { lang: Lang }) {
               key={skill.name}
               className="skill-orb group"
               style={{
-                opacity: 0,
-                animation: `skill-pop 0.35s ease forwards`,
+                opacity:        0,
+                animation:      `skill-pop 0.35s ease forwards`,
                 animationDelay: `${i * 55}ms`,
               }}
             >
-              {/* icon hex */}
               <div
-                className="skill-icon transition-all duration-300
-                           group-hover:scale-110 group-hover:brightness-125"
+                className="skill-icon transition-all duration-300 group-hover:scale-110 group-hover:brightness-125"
                 style={{
-                  filter: "drop-shadow(0 0 0px rgba(212,175,55,0))",
+                  filter:     "drop-shadow(0 0 0px rgba(212,175,55,0))",
                   transition: "filter 0.3s ease, transform 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.filter =
-                    "drop-shadow(0 0 8px rgba(212,175,55,0.55))";
+                  (e.currentTarget as HTMLElement).style.filter = "drop-shadow(0 0 8px rgba(212,175,55,0.55))";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.filter =
-                    "drop-shadow(0 0 0px rgba(212,175,55,0))";
+                  (e.currentTarget as HTMLElement).style.filter = "drop-shadow(0 0 0px rgba(212,175,55,0))";
                 }}
               >
                 <i className={skill.icon} />
               </div>
-              <div
-                className="skill-name transition-colors duration-300 group-hover:text-[#f4d03f]"
-              >
+              <div className="skill-name transition-colors duration-300 group-hover:text-[#f4d03f]">
                 {skill.name}
               </div>
             </div>
@@ -444,7 +514,6 @@ function TechStackSection({ lang }: { lang: Lang }) {
         </div>
       </div>
 
-      {/* keyframe injected once */}
       <style>{`
         @keyframes skill-pop {
           from { opacity: 0; transform: scale(0.7) translateY(12px); }
@@ -478,7 +547,7 @@ function ContactSection({ lang }: { lang: Lang }) {
         "service_ruteuf6",
         "template_fbsx19f",
         {
-          name:    "Portfolio visitor",  
+          name:    "Portfolio visitor",
           email:   fields.email,
           message: fields.mensaje,
           title:   fields.asunto || "Portfolio message",
@@ -493,18 +562,18 @@ function ContactSection({ lang }: { lang: Lang }) {
   };
 
   return (
-    <section id="contact" className="contact-section min-h-screen py-32 px-8 relative z-10">
-      <h2 className="text-6xl text-center mb-12 animate-shimmer shimmer-stroke" style={{ fontWeight: 700 }}>
+    <section id="contact" className="contact-section min-h-screen py-24 sm:py-32 px-4 sm:px-8 relative z-10">
+      <h2 className="text-4xl sm:text-6xl text-center mb-10 sm:mb-12 animate-shimmer shimmer-stroke" style={{ fontWeight: 700 }}>
         {t.contact_title}
       </h2>
       <div className="max-w-5xl mx-auto">
         <div className="decorative-frame">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
-              <p className="text-2xl mb-6" style={{ color: "var(--dorado-claro)", letterSpacing: "0.12em" }}>
+              <p className="text-xl sm:text-2xl mb-4 sm:mb-6" style={{ color: "var(--dorado-claro)", letterSpacing: "0.12em" }}>
                 {t.contact_sub}
               </p>
-              <p className="text-base mb-8 leading-relaxed" style={{ color: "var(--gris-claro)" }}>
+              <p className="text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed" style={{ color: "var(--gris-claro)" }}>
                 {t.contact_text}
               </p>
               <div className="flex gap-6">
@@ -516,10 +585,11 @@ function ContactSection({ lang }: { lang: Lang }) {
                 </a>
               </div>
             </div>
+
             <div className="space-y-3 w-full">
               {([
-                { label: t.f_subject, name: "asunto",  type: "text",  placeholder: t.ph_subject },
-                { label: "Email",     name: "email",   type: "email", placeholder: "usuario@email.com" },
+                { label: t.f_subject, name: "asunto", type: "text",  placeholder: t.ph_subject       },
+                { label: "Email",     name: "email",  type: "email", placeholder: "usuario@email.com" },
               ] as { label: string; name: keyof FormFields; type: string; placeholder: string }[]).map((f) => (
                 <div key={f.name}>
                   <label className="block text-sm" style={{ color: "var(--dorado-claro)", letterSpacing: "0.1em" }}>
@@ -548,7 +618,7 @@ function ContactSection({ lang }: { lang: Lang }) {
                   className="contact-input text-sm py-2 resize-none"
                 />
               </div>
-              <button onClick={handleSubmit} disabled={sending} className="btn-mystic px-8 text-sm">
+              <button onClick={handleSubmit} disabled={sending} className="btn-mystic px-8 text-sm w-full sm:w-auto">
                 <span>{sending ? t.sending : t.btn_send}</span>
               </button>
               {status && (
@@ -567,7 +637,7 @@ function ContactSection({ lang }: { lang: Lang }) {
 function Footer({ lang }: { lang: Lang }) {
   return (
     <footer
-      className="py-8 text-center relative z-10 mt-48"
+      className="py-8 text-center relative z-10 mt-24 sm:mt-48"
       style={{ background: "rgba(10,10,10,0.8)", borderTop: "1px solid rgba(212,175,55,0.2)" }}
     >
       <p style={{ color: "var(--gris-claro)", letterSpacing: "0.15em" }}>
@@ -580,25 +650,27 @@ function Footer({ lang }: { lang: Lang }) {
 // App Principal
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState<Lang>("es");
+  const [lang,     setLang]     = useState<Lang>("es");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // FontAwesome
     const fa = document.createElement("script");
     fa.src = "https://kit.fontawesome.com/337be747ec.js";
     fa.crossOrigin = "anonymous";
     document.head.appendChild(fa);
 
-    // EmailJS — carga el SDK y lo inicializa con tu public key
     const ejs = document.createElement("script");
     ejs.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
     ejs.onload = () => {
       // @ts-ignore
-      window.emailjs.init({ publicKey: "26AjJvp86Dw82_dqN" }); 
+      window.emailjs.init({ publicKey: "26AjJvp86Dw82_dqN" });
     };
     document.head.appendChild(ejs);
 
-    const handleScroll = () => setScrolled(window.scrollY > 80);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+      setMenuOpen(false);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -606,13 +678,13 @@ export default function App() {
   return (
     <>
       <RoseBackground />
-      <Navbar scrolled={scrolled} lang={lang} setLang={setLang} />
-      <HeroSection    lang={lang} />
-      <AboutSection   lang={lang} />
-      <ProjectsSection lang={lang} />
+      <Navbar scrolled={scrolled} lang={lang} setLang={setLang} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <HeroSection      lang={lang} />
+      <AboutSection     lang={lang} />
+      <ProjectsSection  lang={lang} />
       <TechStackSection lang={lang} />
-      <ContactSection lang={lang} />
-      <Footer         lang={lang} />
+      <ContactSection   lang={lang} />
+      <Footer           lang={lang} />
     </>
   );
 }
