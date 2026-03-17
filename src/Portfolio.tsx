@@ -303,7 +303,7 @@ function HeroSection({ lang }: { lang: Lang }) {
   const t = T[lang];
   return (
     <section id="home" className="min-h-screen flex flex-col justify-center items-center relative mt-5 px-4 sm:px-8 z-10">
-      <div className="decorative-frame w-full max-w-2xl mx-auto">
+      <div className="decorative-frame w-full max-w-3xl mx-auto">
         <h1 className="text-2xl sm:text-4xl font-semibold text-center tracking-[0.2em] mb-4 animate-shimmer shimmer-stroke">
           Ainy Contreras Mendoza
         </h1>
